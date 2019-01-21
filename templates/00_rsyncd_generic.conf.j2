@@ -1,0 +1,9 @@
+#generic
+uid = {{ rsyncd_uid }}
+gid = {{ rsyncd_gid }}
+use chroot = yes
+max connections = {{ rsyncd_max_connections }}
+syslog facility = local5
+pid file = /var/run/rsyncd.pid
+motd file = /etc/rsync.header
+

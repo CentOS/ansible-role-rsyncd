@@ -1,0 +1,60 @@
+---
+# tasks file for rsync
+
+- name: Ensuring pkgs are installed
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - rsync
+
+- name: Ensuring we have a drop-in directory (for various roles)
+  file:
+    path: /etc/rsyncd.d
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Default rsyncd header file
+  template:
+    src: rsync.header.j2
+    dest: /etc/rsync.header
+
+- name: Common rsync file
+  template:
+    src: 00_rsyncd_generic.conf.j2
+    dest: /etc/rsyncd.d/00_rsyncd_generic.conf
+
+- name: Building rsyncd.conf
+  assemble:
+    src: /etc/rsyncd.d/
+    dest: /etc/rsyncd.conf
+
+- name: Ensuring rsyncd is started and enabled
+  service:
+    name: rsyncd
+    enabled: True
+    state: started
+ 
+- name: Opening up rsyncd rule
+  include_role:
+    name: iptables
+    tasks_from: custom-policy
+  vars:
+    iptables_policy_name: rsyncd
+    iptables_protocol: tcp
+    iptables_port: "873"
+    iptables_source: "0.0.0.0/0"
+  when: rsyncd_public
+
+- name: Opening up rsyncd rule (ipv6)
+  include_role:
+    name: iptables
+    tasks_from: custom-policy-ipv6
+  vars:
+    iptables_policy_name: rsyncd
+    iptables_protocol: tcp
+    iptables_port: "873"
+    iptables_source: "::/0"
+  when: rsyncd_public
+ 

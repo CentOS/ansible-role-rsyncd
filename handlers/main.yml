@@ -1,0 +1,6 @@
+---
+# handlers file for rsync
+- name: restart_rsyncd
+  service:
+    name: rsyncd
+    state: restarted
