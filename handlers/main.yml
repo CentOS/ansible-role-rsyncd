@@ -4,3 +4,10 @@
   service:
     name: rsyncd
     state: restarted
+
+- name: rebuild_rsyncd
+  assemble:
+    src: /etc/rsyncd.d/
+    dest: /etc/rsyncd.conf
+  notify: restart_rsyncd
+
