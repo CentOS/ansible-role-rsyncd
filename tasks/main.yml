@@ -25,6 +25,12 @@
     src: 00_rsyncd_generic.conf.j2
     dest: /etc/rsyncd.d/00_rsyncd_generic.conf
 
+- name: Locally defined rsyncd modules (outside of other roles)
+  template:
+    src: 99_local_modules.conf.j2
+    dest: /etc/rsyncd.d/99_local_modules.conf
+  when: rsyncd_local_modules is defined  
+  
 - name: Building rsyncd.conf
   assemble:
     src: /etc/rsyncd.d/

@@ -6,3 +6,15 @@ rsyncd_max_connections: 40
 
 # Wide-open for iptables ?
 rsyncd_public: True
+
+# Do we want custom/local rsyncd modules (not defined by other roles) ?
+# Only applied by rsyncd role if rsyncd_local_modules is defined (see example below)
+# rsyncd_local_modules:
+#  - name: incoming
+#    path: /srv/incoming
+#    comment: Allow incoming pushes from some IP addresses
+#    read_only: 'no'
+#    list: 'no'
+#    hosts_allow: 192.168.1.1 ::1
+#    hosts_deny: '*'
+

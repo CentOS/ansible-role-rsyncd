@@ -1,0 +1,11 @@
+# This file is generated automatically by Ansible
+# don't edit it by hands
+{% for module in rsyncd_local_modules %}
+[{{ module.name }}]
+	path = {{ module.path }}
+	comment = {{ module.comment }}
+	read only = {{ module.read_only }}
+	list = {{ module.list }}
+	hosts allow = {{ module.hosts_allow }}
+	hosts deny = {{ module.hosts_deny }}
+{% endfor %}
