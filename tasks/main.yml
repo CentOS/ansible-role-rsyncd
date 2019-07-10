@@ -63,4 +63,13 @@
     iptables_port: "873"
     iptables_source: "::/0"
   when: rsyncd_public
- 
+
+- name: Allowing rsyncd to access FS (when using local modules)
+  seboolean:
+    name: "{{ item }}"
+    persistent: yes
+    state: yes
+  when: rsyncd_local_modules is defined  
+  with_items:
+    - rsync_export_all_ro
+    - rsync_full_access
