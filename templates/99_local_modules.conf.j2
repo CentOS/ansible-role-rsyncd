@@ -8,4 +8,7 @@
 	list = {{ module.list }}
 	hosts allow = {{ module.hosts_allow }}
 	hosts deny = {{ module.hosts_deny }}
+{% if module.uid is defined %}
+  uid = {{ module.uid }}
+{% endif %}
 {% endfor %}
