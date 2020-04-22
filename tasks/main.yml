@@ -3,10 +3,8 @@
 
 - name: Ensuring pkgs are installed
   yum:
-    name: "{{ item }}"
+    name: rsync
     state: latest
-  with_items:
-    - rsync
 
 - name: Ensuring we have a drop-in directory (for various roles)
   file:
